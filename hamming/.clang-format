@@ -1,0 +1,15 @@
+﻿---
+BasedOnStyle: Google
+AlignAfterOpenBracket: Align
+ColumnLimit: '81'
+Cpp11BracedListStyle: 'true'
+IndentCaseLabels: 'true'
+IndentWidth: '4'
+NamespaceIndentation: All
+SortIncludes: 'true'
+SortUsingDeclarations: 'true'
+SpaceBeforeAssignmentOperators: 'true'
+TabWidth: '4'
+UseTab: Never
+
+...

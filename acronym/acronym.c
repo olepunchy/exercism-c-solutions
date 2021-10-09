@@ -1,51 +1,41 @@
 #include "acronym.h"
+#include <assert.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
-char *abbreviate(const char *phrase) {
+// Updated after code review reply by G. Sliepen
 
-  // Return NULL for NULL or empty phrase
+char *abbreviate(const char *phrase) {
+  // Production code should call assert() here
+  // For exercism tests, instead return NULL
   if (phrase == NULL || strlen(phrase) == 0) {
     return NULL;
   }
 
-  size_t phrase_length = strlen(phrase) - 1;
-  size_t acronym_index = 0;
-  size_t phrase_index = 0;
-
-  // The acronym will not be longer than the phrase length.
-  char *acronym = malloc(phrase_length * sizeof(char));
-
-  // The first letter of the phrase is the first initial in the acronym.
-  acronym[acronym_index] = toupper(phrase[phrase_index]);
-
-  acronym_index++;
-  phrase_index++;
-
-  while (phrase[phrase_index] != '\0') {
-    // At the end of the string, add a null terminator.
-    if (phrase_index == phrase_length) {
-      acronym[acronym_index] = '\0';
-      acronym_index++;
-      phrase_index++;
-      break;
-    }
-
-    char letter = phrase[phrase_index];
-    char next_letter = phrase[phrase_index + 1];
-
-    // If letter is not an apostrophe or alpha character, but the next one is,
-    // found a word boundary and the next charcter is part of the acronym.
-    if (letter != '\'' && !isalpha(letter) && isalpha(next_letter)) {
-      acronym[acronym_index] = toupper(next_letter);
-
-      acronym_index++;
-      phrase_index++;
-    }
-
-    phrase_index++;
+  // Estimate the size of the acronym to be no more than
+  // half the length of the phrase plus null terminator.
+  char *acronym = malloc(strlen(phrase) / 2 + 1);
+  // Verify that the memory allocation worked.
+  if (!acronym) {
+    return NULL;
   }
 
-  return acronym;
+  char previous = ' ';
+  size_t length = 0;
+
+  for (size_t index = 0; phrase[index]; index++) {
+    char current = phrase[index];
+
+    if (previous != '\'' && !isalpha(previous) && isalpha(current)) {
+      acronym[length++] = toupper(current);
+    }
+
+    previous = current;
+  }
+
+  // Null terminate the string
+  acronym[length++] = '\0';
+  // Resize acronym to the number of bytes used
+  return realloc(acronym, length);
 }

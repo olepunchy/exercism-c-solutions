@@ -91,6 +91,13 @@ static void test_underscore_emphasis(void) {
   check_abbreviation(phrase, expected);
 }
 
+static void test_united_states_of_america(void) {
+  /* TEST_IGNORE(); */
+  char *phrase = "United States of America";
+  char *expected = "USOA";
+  check_abbreviation(phrase, expected);
+}
+
 int main(void) {
   UnityBegin("test_acronym.c");
 
@@ -105,6 +112,7 @@ int main(void) {
   RUN_TEST(test_consecutive_delimiters_abbreviation);
   RUN_TEST(test_apostrophes);
   RUN_TEST(test_underscore_emphasis);
+  RUN_TEST(test_united_states_of_america);
 
   return UnityEnd();
 }

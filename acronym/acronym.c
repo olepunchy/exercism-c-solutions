@@ -3,29 +3,27 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int MAX_ACRONYM_LENGTH = 256;
-
 char *abbreviate(const char *phrase) {
 
-  if (phrase == NULL) {
-    return NULL;
-  }
-
-  if (strlen(phrase) == 0) {
+  // Return NULL for NULL or empty phrase
+  if (phrase == NULL || strlen(phrase) == 0) {
     return NULL;
   }
 
   size_t phrase_length = strlen(phrase) - 1;
   size_t acronym_index = 0;
   size_t phrase_index = 0;
-  char *acronym = malloc(MAX_ACRONYM_LENGTH * sizeof(char));
+
+  // The acronym will not be longer than the phrase length.
+  char *acronym = malloc(phrase_length * sizeof(char));
+
+  // The first letter of the phrase is the first initial in the acronym.
   acronym[acronym_index] = toupper(phrase[phrase_index]);
 
   acronym_index++;
   phrase_index++;
 
   while (phrase[phrase_index] != '\0') {
-
     // At the end of the string, add a null terminator.
     if (phrase_index == phrase_length) {
       acronym[acronym_index] = '\0';

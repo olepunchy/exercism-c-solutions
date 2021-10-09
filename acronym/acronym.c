@@ -34,8 +34,14 @@ char *abbreviate(const char *phrase) {
     previous = current;
   }
 
-  // Null terminate the string
-  acronym[length++] = '\0';
-  // Resize acronym to the number of bytes used
-  return realloc(acronym, length);
+  if (length) {
+    // Add the null terminator to the end of the string.
+    acronym[length++] = '\0';
+    // Resize the acronym to the actual length of the string.
+    return realloc(acronym, length);
+  } else {
+    // Something is wrong, free the memory and return NULL
+    free(acronym);
+    return NULL;
+  }
 }
